@@ -32,5 +32,10 @@ import { Spawn } from "./lib/spawn.mjs";
 import { CALC_WORKER } from "./util/worker.map.js";
 
 const a1 = new Spawn(CALC_WORKER);
-a1.worker.postMessage({ arg: 1 });
-a1.worker.onmessage = handleOnMessage;
+// a1.worker.postMessage({ arg: 1 });
+// a1.worker.onmessage = handleOnMessage;
+
+const k = a1.spawn(5);
+console.log("🚀 ~ file: main.mjs:39 ~ k", k);
+k.next(); // 2nd worker spawned
+k.next(); // 3rd worker spawned...
