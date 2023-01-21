@@ -11,8 +11,9 @@
 // requestIdleCallback(() => console.log("run on idle!"), { timeout: 1000 });
 import { _ } from "./lib/_.mjs";
 
-const ECHO_WORKER = "./workers/echo_worker.mjs";
-const CALC_WORKER = "./workers/calc_worker.mjs";
+const PATH = ({ id }) => `./workers/${id}_worker.mjs`;
+const ECHO_WORKER = PATH({ id: "echo" });
+const CALC_WORKER = PATH({ id: "calc" });
 
 const echo_worker = new Worker(ECHO_WORKER, { type: "module" });
 const calc_worker = new Worker(CALC_WORKER, { type: "module" });
@@ -23,5 +24,6 @@ calc_worker.postMessage({ arg: 100 });
 const handleOnMessage = (e) => {
   console.log("on Message from worker", e.data);
 };
+
 echo_worker.onmessage = handleOnMessage;
 calc_worker.onmessage = handleOnMessage;
