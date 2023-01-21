@@ -9,14 +9,13 @@
 //   console.log("호출 페이지 - ", e.data);
 // };
 // requestIdleCallback(() => console.log("run on idle!"), { timeout: 1000 });
-import { seq } from "./lib/_.mjs";
+// import seq from "./_.mjs";
 
 const URL = "./worker.mjs";
-const a = seq(5);
+// const a = seq(5);
+// console.log("seq?", [...seq(5)]);
 
-console.log("seq?", [...seq(5)]);
-
-const a1 = new Worker(URL);
-const a2 = new Worker(URL);
-a1.postMessage({ msg: "hi" });
-a2.postMessage({ msg: "hello" });
+const a1 = new Worker(URL, { type: "module" });
+const a2 = new Worker(URL, { type: "module" });
+a1.postMessage({ id: 1, data: 3 });
+a2.postMessage({ id: 2, data: null });
