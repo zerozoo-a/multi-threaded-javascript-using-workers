@@ -9,21 +9,28 @@
 //   console.log("호출 페이지 - ", e.data);
 // };
 // requestIdleCallback(() => console.log("run on idle!"), { timeout: 1000 });
-import { _ } from "./lib/_.mjs";
+// import { _ } from "./lib/_.mjs";
 
-const PATH = ({ id }) => `./workers/${id}_worker.mjs`;
-const ECHO_WORKER = PATH({ id: "echo" });
-const CALC_WORKER = PATH({ id: "calc" });
+// const PATH = ({ id }) => `./workers/${id}_worker.mjs`;
+// const ECHO_WORKER = PATH({ id: "echo" });
+// const CALC_WORKER = PATH({ id: "calc" });
 
-const echo_worker = new Worker(ECHO_WORKER, { type: "module" });
-const calc_worker = new Worker(CALC_WORKER, { type: "module" });
+// const echo_worker = new Worker(ECHO_WORKER, { type: "module" });
+// const calc_worker = new Worker(CALC_WORKER, { type: "module" });
 
-echo_worker.postMessage({ id: 1, data: 0 });
-calc_worker.postMessage({ arg: 100 });
+// echo_worker.postMessage({ id: 1, data: 0 });
+// calc_worker.postMessage({ arg: 100 });
 
 const handleOnMessage = (e) => {
   console.log("on Message from worker", e.data);
 };
 
-echo_worker.onmessage = handleOnMessage;
-calc_worker.onmessage = handleOnMessage;
+// echo_worker.onmessage = handleOnMessage;
+// calc_worker.onmessage = handleOnMessage;
+
+import { Spawn } from "./lib/spawn.mjs";
+import { CALC_WORKER } from "./util/worker.map.js";
+
+const a1 = new Spawn(CALC_WORKER);
+a1.worker.postMessage({ arg: 1 });
+a1.worker.onmessage = handleOnMessage;

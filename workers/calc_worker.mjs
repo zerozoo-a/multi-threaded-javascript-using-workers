@@ -1,18 +1,7 @@
 import { _ } from "../lib/_.mjs";
 
 const handleOnMessage = (e) => {
-  const result = [..._.seq(e.data.arg)];
-  sayHi();
-  prm.then((r) => postMessage({ result: r }));
+  console.log("hi?", e);
+  postMessage({ result: 1 + 1 + e.data.arg });
 };
 self.onmessage = handleOnMessage;
-
-const sayHi = () => {
-  console.log("hi!");
-};
-
-const prm = new Promise((res, rej) => {
-  setTimeout(() => {
-    res("hi too!");
-  }, 5000);
-});
