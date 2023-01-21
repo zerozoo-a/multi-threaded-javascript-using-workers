@@ -11,15 +11,17 @@
 // requestIdleCallback(() => console.log("run on idle!"), { timeout: 1000 });
 import { _ } from "./lib/_.mjs";
 
-const URL = "./worker.mjs";
-const args = _.seq(1000);
+const ECHO_WORKER = "./workers/echo_worker.mjs";
+const CALC_WORKER = "./workers/calc_worker.mjs";
 
-const echo = new Worker(URL, { type: "module" });
-const a2 = new Worker(URL, { type: "module" });
-echo.postMessage({ id: 1, data: 0 });
-a2.postMessage({ id: 2, data: 100 });
+const echo_worker = new Worker(ECHO_WORKER, { type: "module" });
+const calc_worker = new Worker(CALC_WORKER, { type: "module" });
+
+echo_worker.postMessage({ id: 1, data: 0 });
+calc_worker.postMessage({ arg: 100 });
 
 const handleOnMessage = (e) => {
   console.log("on Message from worker", e.data);
 };
-echo.onmessage = handleOnMessage;
+echo_worker.onmessage = handleOnMessage;
+calc_worker.onmessage = handleOnMessage;
